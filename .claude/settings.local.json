@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('hex'\\)\\)\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx prisma generate 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx prisma migrate deploy 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npm run build 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npm run dev)",
+      "Bash(netstat -ano | findstr :3000 | findstr LISTENING)",
+      "Bash(taskkill /PID 13712 /F && echo \"Killed process on port 3000\")",
+      "Bash(cmd /c \"taskkill /PID 13712 /F\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npm run dev 2>&1)",
+      "Bash(cmd /c \"FOR /F \\\\\"tokens=5\\\\\" %P IN \\('netstat -ano ^| findstr :3000 ^| findstr LISTENING'\\) DO taskkill /F /PID %P\")",
+      "Bash(cmd /c \"taskkill /F /IM node.exe\")",
+      "Bash(cmd /c \"tasklist /FI \\\\\"PID eq 13712\\\\\"\")",
+      "Bash(netstat -ano | findstr :3000)",
+      "Bash(taskkill /PID 13712 /F)",
+      "Bash(cmd /c taskkill /PID 13712 /F)",
+      "Bash(cmd /c \"taskkill /PID 13712 /F && echo KILLED\")",
+      "Bash(powershell -Command \"Stop-Process -Id 13712 -Force; Write-Host 'Done'\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && node -e \"const bcrypt = require\\('bcrypt'\\); bcrypt.hash\\('madhusudhan', 10\\).then\\(h => console.log\\(h\\)\\)\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && powershell -Command \"\\(Get-Content 'src\\\\components\\\\home\\\\FeatureNews\\\\NewsFeatureRightSide.tsx'\\) -replace 'সর্বশেষ', 'Latest' -replace 'জনপ্রিয়', 'Popular' -replace 'ভিডিও স্টোরি', 'Video Story' -replace 'সর্বশেষ সব খবর', 'All Latest News' | Set-Content 'src\\\\components\\\\home\\\\FeatureNews\\\\NewsFeatureRightSide.tsx'\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && powershell -Command \"$f = 'src/app/news/details/[slug]/page.tsx'; \\(Get-Content $f\\) -replace [regex]::Escape\\('আরও ভিডিও নিউজ দেখুন'\\), 'Watch More Video News' -replace [regex]::Escape\\('এই বিভাগ'\\), 'this category' -replace [regex]::Escape\\('নিয়ে আরও পড়ুন'\\), 'Read More' | Set-Content $f\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && node -e \"\nconst fs = require\\('fs'\\);\nconst path = 'src/app/news/details/[slug]/page.tsx';\nlet content = fs.readFileSync\\(path, 'utf8'\\);\ncontent = content.replace\\('আরও ভিডিও নিউজ দেখুন', 'Watch More Video News'\\);\ncontent = content.replace\\('এই বিভাগ', 'this category'\\);\ncontent = content.replace\\('নিয়ে আরও পড়ুন', 'Read More'\\);\nfs.writeFileSync\\(path, content, 'utf8'\\);\nconsole.log\\('done'\\);\n\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && node -e \"\nconst fs = require\\('fs'\\);\n\n// latest/page.tsx\nlet f1 = fs.readFileSync\\('src/app/latest/page.tsx', 'utf8'\\);\nf1 = f1.replace\\('জাতীয়', 'National'\\);\nf1 = f1.replace\\(/ড\\\\. শাহেদুর এনআইবির নতুন মহাপরিচালক/g, 'Dr. Shahedur Appointed New Director of NIB'\\);\nf1 = f1.replace\\(/ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি \\\\\\(এনআইবি\\\\\\) এর নতুন মহাপরিচালক হলেন ড\\\\. শাহেদুর রহমান। \\\\.\\\\.\\\\./g, 'Dr. Shahedur Rahman, a professor at Jahangirnagar University, has been appointed as the new Director General of NIB...'\\);\nf1 = f1.replace\\(/নিজস্ব প্রতিবেদক/g, 'Staff Reporter'\\);\nf1 = f1.replace\\(/১১ দিন আগে/g, '11 days ago'\\);\nf1 = f1.replace\\(/ইউটিউব সার্চ হিস্ট্রি মুছে ফেলার উপায়/g, 'How to Clear YouTube Search History'\\);\nfs.writeFileSync\\('src/app/latest/page.tsx', f1, 'utf8'\\);\n\n// search/page.tsx\nlet f2 = fs.readFileSync\\('src/app/search/page.tsx', 'utf8'\\);\nf2 = f2.replace\\(/অনুসন্ধান: পূর্বাঞ্চলের বন্যা নিয়ন্ত্রণে এই সরকার সফল: রিজভী/g, 'Search: Government Succeeds in Eastern Flood Control: Rizvee'\\);\nf2 = f2.replace\\(/ড\\\\. শাহেদুর এনআইবির নতুন মহাপরিচালক/g, 'Dr. Shahedur Appointed New Director of NIB'\\);\nf2 = f2.replace\\(/ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি \\\\\\(এনআইবি\\\\\\) এর নতুন মহাপরিচালক হলেন ড\\\\. শাহেদুর রহমান। জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের বায়োটেকনোলজি বিভাগের এই অধ্যাপক বায়োটেকনোলজি/g, 'Dr. Shahedur Rahman, a professor at Jahangirnagar University, has been appointed as the new Director General of NIB.'\\);\nf2 = f2.replace\\(/নিজস্ব প্রতিবেদক/g, 'Staff Reporter'\\);\nf2 = f2.replace\\(/১১ দিন আগে/g, '11 days ago'\\);\nf2 = f2.replace\\(/ইউটিউব সার্চ হিস্ট্রি মুছে ফেলার উপায়/g, 'How to Clear YouTube Search History'\\);\nfs.writeFileSync\\('src/app/search/page.tsx', f2, 'utf8'\\);\n\n// category/[category_slug]/page.tsx\nlet f3 = fs.readFileSync\\('src/app/category/[category_slug]/page.tsx', 'utf8'\\);\nf3 = f3.replace\\(/ড\\\\. শাহেদুর এনআইবির নতুন মহাপরিচালক/g, 'Dr. Shahedur Appointed New Director of NIB'\\);\nf3 = f3.replace\\(/ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি \\\\\\(এনআইবি\\\\\\) \\\\.\\\\.\\\\./g, 'Dr. Shahedur Rahman has been appointed as the new Director General of NIB...'\\);\nf3 = f3.replace\\(/নিজস্ব প্রতিবেদক/g, 'Staff Reporter'\\);\nf3 = f3.replace\\(/১১ দিন আগে/g, '11 days ago'\\);\nf3 = f3.replace\\(/ইউটিউব সার্চ হিস্ট্রি মুছে ফেলার উপায়/g, 'How to Clear YouTube Search History'\\);\nfs.writeFileSync\\('src/app/category/[category_slug]/page.tsx', f3, 'utf8'\\);\n\nconsole.log\\('all done'\\);\n\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx prisma db push 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && node scripts/initial-sync.js 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && powershell -Command \"Stop-Process -Id \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue\\).OwningProcess -Force -ErrorAction SilentlyContinue; Write-Host 'Stopped'\")"
+    ]
+  }
+}

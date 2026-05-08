@@ -22,7 +22,7 @@ interface LatestNews {
 }
 
 const NewsFeatureRightSide: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>("সর্বশেষ");
+  const [activeTab, setActiveTab] = useState<string>("Latest");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [latestNews, setLatestNews] = useState<LatestNews[]>([]);
   const [hasFetchedVideoStory, setHasFetchedVideoStory] = useState(false);
@@ -154,7 +154,7 @@ const NewsFeatureRightSide: React.FC = () => {
           {activeTab === "জনপ্রিয়" && (
             <div className="h-[350px] overflow-y-auto p-2">
               <NewsItem
-                text="৯০ হাজার বছরের পুরোনো ‘মানুষের পায়ের ছাপ’ মিললো মরক্কোতে"
+                text="90,000-year-old human footprints found in Morocco"
                 Icon={true}
               />
             </div>

@@ -7,70 +7,56 @@ import NewsItem2 from "../FeatureNews/NewsItem2";
 import BodyContainer from "@/components/common/BodyContainer";
 import Link from "next/link";
 
-const imageBaseURL = process.env.NEXT_PUBLIC_IMAGE_URL;
+const FALLBACK_IMAGE = "https://placehold.co/350x200/e2e8f0/94a3b8?text=No+Image";
 
-interface NewsItem {
+interface ExternalNewsItem {
   id: number;
   title: string;
-  highlight_text?: string;
-  featured_image?: string;
+  description?: string | null;
+  link: string;
+  source_name?: string | null;
+  image_url?: string | null;
 }
 
 const LifestyleNews: React.FC = () => {
-  const [healthNews, setHealthNews] = useState<NewsItem[]>([]);
-  const [lifestyleNews, setLifestyleNews] = useState<NewsItem[]>([]);
-  const [expatNews, setExpatNews] = useState<NewsItem[]>([]);
+  const [healthNews, setHealthNews] = useState<ExternalNewsItem[]>([]);
+  const [lifestyleNews, setLifestyleNews] = useState<ExternalNewsItem[]>([]);
+  const [tourismNews, setTourismNews] = useState<ExternalNewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
     if (hasFetched) return;
 
-    const fetchCategoryNews = async (categoryId: number, limit: number) => {
-      try {
-        const response = await fetch(`/api/public/news/category`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            categoryId: categoryId,
-            newsItem: limit,
-            video: false,
-          }),
-        });
-
-        if (!response.ok) throw new Error(`Failed to fetch news for category ${categoryId}`);
-        const data: NewsItem[] = await response.json();
-        return data;
-      } catch (error) {
-        console.error(`Error fetching news for category ${categoryId}:`, error);
-        return [];
-      }
-    };
-
     const fetchAllNews = async () => {
-      const [healthData, lifestyleData, expatData] = await Promise.all([
-        fetchCategoryNews(1, 4), // Health category ID
-        fetchCategoryNews(2, 4), // Lifestyle category ID
-        fetchCategoryNews(3, 4), // Expatriate category ID
-      ]);
-
-      setHealthNews(healthData);
-      setLifestyleNews(lifestyleData);
-      setExpatNews(expatData);
-      setHasFetched(true);
-      setLoading(false);
+      try {
+        const [healthRes, lifestyleRes, tourismRes] = await Promise.all([
+          fetch(`/api/public/external-news?category=health&limit=4`),
+          fetch(`/api/public/external-news?category=top&limit=4`),
+          fetch(`/api/public/external-news?category=tourism&limit=4`),
+        ]);
+        const [healthData, lifestyleData, tourismData] = await Promise.all([
+          healthRes.json(),
+          lifestyleRes.json(),
+          tourismRes.json(),
+        ]);
+        setHealthNews(healthData);
+        setLifestyleNews(lifestyleData);
+        setTourismNews(tourismData);
+        setHasFetched(true);
+      } catch (error) {
+        console.error("Error fetching lifestyle news:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchAllNews();
   }, [hasFetched]);
 
-  if (loading) {
-    return null;
-  }
+  if (loading) return null;
 
-  const renderCategorySection = (title: string, link: string, news: NewsItem[]) => (
+  const renderCategorySection = (title: string, link: string, news: ExternalNewsItem[]) => (
     <div className="w-full sm:pt-">
       <div className="flex items-center justify-between border bg-base-content shadow-md rounded-xl py-1 my-2 sm:my-0">
         <Link href={link} passHref>
@@ -79,29 +65,27 @@ const LifestyleNews: React.FC = () => {
       </div>
 
       <div className="space-y-2 sm:mt-4">
-        {/* First News Item */}
         {news[0] && (
-          <Link href={`/news/details/${news[0].id}`} passHref>
+          <a href={news[0].link} target="_blank" rel="noopener noreferrer">
             <NewsCard
               title={news[0].title}
-              imageSrc={`${imageBaseURL}/${news[0].featured_image}`}
-              highlight={news[0].highlight_text || ""}
+              imageSrc={news[0].image_url || FALLBACK_IMAGE}
+              highlight={news[0].source_name || ""}
               onClick={() => {}}
             />
-          </Link>
+          </a>
         )}
 
-        {/* Bottom News Items */}
         <div className="space-y-4">
           {news.slice(1).map((item) => (
-            <Link href={`/news/details/${item.id}`} key={item.id} passHref>
+            <a href={item.link} key={item.id} target="_blank" rel="noopener noreferrer">
               <NewsItem2
                 text={item.title}
-                highlight={item.highlight_text || ""}
+                highlight={item.source_name || ""}
                 Icon={false}
                 onClick={() => {}}
               />
-            </Link>
+            </a>
           ))}
         </div>
       </div>
@@ -111,12 +95,9 @@ const LifestyleNews: React.FC = () => {
   return (
     <BodyContainer>
       <div className="pt-5 md:pt-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* First Two Categories */}
-        <div className="col-span-1">{renderCategorySection("স্বাস্থ্য", "/category/health", healthNews)}</div>
-        <div className="col-span-1">{renderCategorySection("লাইফস্টাইল", "/category/lifestyle", lifestyleNews)}</div>
-        
-        {/* Third Category */}
-        <div className="col-span-1 sm:col-span-2 lg:col-span-1">{renderCategorySection("প্রবাসে বাংলাদেশ", "/category/expat", expatNews)}</div>
+        <div className="col-span-1">{renderCategorySection("Health", "/category/health", healthNews)}</div>
+        <div className="col-span-1">{renderCategorySection("Lifestyle", "/category/lifestyle", lifestyleNews)}</div>
+        <div className="col-span-1 sm:col-span-2 lg:col-span-1">{renderCategorySection("Tourism", "/category/tourism", tourismNews)}</div>
       </div>
     </BodyContainer>
   );

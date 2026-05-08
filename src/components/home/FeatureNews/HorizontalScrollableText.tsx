@@ -13,7 +13,7 @@ const InfiniteScrollText: React.FC<HorizontalScrollableTextProps> = ({
     <BodyContainer>
       <div className="flex items-center px-0">
         <button className="bg-base-content text-white px-2 py-2 text-xl rounded-md mr-2">
-          শিরোনাম
+          Headlines
         </button>
         <div className="flex-1 py-2 overflow-hidden bg-base-content rounded-md">
           <div className="animate-scroll whitespace-nowrap text-xl text-white px-4  ">

@@ -45,9 +45,6 @@ export async function POST(request: NextRequest) {
         created_at: "desc",
       },
       take: Number(newsItem),
-      cacheStrategy: {
-        ttl: 300, // Cache for 5 minutes (300 seconds)
-      },
     });
 
     return NextResponse.json(news, { status: 200 });

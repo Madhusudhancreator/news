@@ -8,9 +8,6 @@ export async function GET() {
       select: {
         video_url: true,
       },
-      cacheStrategy: {
-        ttl: 300, // Cache for 5 minutes (300 seconds)
-      },
     });
 
     // return NextResponse.json(videoStory || { video_url: null }, { status: 200 });

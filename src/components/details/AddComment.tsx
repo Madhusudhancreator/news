@@ -7,7 +7,7 @@ const AddComment: React.FC = () => {
 
     return (
         <div>
-            <h1 className='mt-8 text-4xl text-gray-900'>মন্তব্য(0)</h1>
+            <h1 className='mt-8 text-4xl text-gray-900'>Comments (0)</h1>
             <div className="flex w-full items-start space-x-4 mt-8">
 
                 <div className="flex-shrink-0">
@@ -28,7 +28,7 @@ const AddComment: React.FC = () => {
                         </div>
                         <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
                             <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                                পোস্ট করুন
+                                Post
                             </button>
                             <div className="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
                                 <button type="button" className="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">

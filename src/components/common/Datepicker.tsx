@@ -34,7 +34,7 @@ const TailwindDatePicker: React.FC = () => {
       <div className="bg-white shadow-lg rounded-lg px-3 py-5">
         <div className="flex items-center justify-center border bg-base-content shadow-md rounded-xl py-1 mb-4">
           <div className="text-white text-xl px-4 cursor-pointer">
-            পুরোনো নিউজ আর্কাইভ
+            News Archive
           </div>
         </div>
 
@@ -48,10 +48,10 @@ const TailwindDatePicker: React.FC = () => {
             <input
               readOnly
               className="w-full outline-none text-xl font-medium placeholder-gray-400 bg-transparent"
-              placeholder="তারিখ নির্বাচন করুন"
+              placeholder="Select a date"
               value={
                 selectedDate
-                  ? selectedDate.toLocaleDateString("bn-BD", {
+                  ? selectedDate.toLocaleDateString("en-US", {
                       timeZone: "Asia/Dhaka",
                       day: "numeric",
                       month: "long",
@@ -107,7 +107,7 @@ const TailwindDatePicker: React.FC = () => {
           }
           className="btn text-xl font-medium mt-3 w-full"
         >
-          খুঁজুন
+          Search
         </button>
       </div>
     </div>

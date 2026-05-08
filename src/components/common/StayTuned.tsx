@@ -9,7 +9,7 @@ interface StayTunedProps {
 const StayTuned: React.FC<StayTunedProps> = ({ colon }) => {
     return (
         <div className='md:text-left text-center'>
-            <h4 className='text-xl md:text-2xl mb-4'>সঙ্গে থাকুন {colon && ':'}</h4>
+            <h4 className='text-xl md:text-2xl mb-4'>Follow Us {colon && ':'}</h4>
             <div className='flex items-center gap-2 md:gap-3 md:justify-start justify-center text-2xl'>
                 <Link href={"/"}>
                     <FontAwesomeIcon className='md:w-[40px] w-[32px] text-blue-600' icon={faFacebook} />

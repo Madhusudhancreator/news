@@ -22,7 +22,7 @@ const NewsCategory: React.FC<NewsCategoryProps> = ({ params, searchParams }) => 
         <div className="pt-2 pb-4">
           <h1 className="text-2xl md:text-4xl text-red-500 cursor-pointer ">
             {" "}
-            অনুসন্ধান: পূর্বাঞ্চলের বন্যা নিয়ন্ত্রণে এই সরকার সফল: রিজভী 
+            Search: Government Succeeds in Eastern Flood Control: Rizvee 
           </h1>
         </div>
         <div className="border-b-2 border-gray-100 mb-2 "></div>
@@ -32,10 +32,10 @@ const NewsCategory: React.FC<NewsCategoryProps> = ({ params, searchParams }) => 
 
             <div className="md:pr-8">
               <CategoryCard
-                title="ড. শাহেদুর এনআইবির নতুন মহাপরিচালক"
+                title="Dr. Shahedur Appointed New Director of NIB"
                 description="ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি (এনআইবি) এর নতুন মহাপরিচালক হলেন ড. শাহেদুর রহমান। জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের বায়োটেকনোলজি বিভাগের এই অধ্যাপক বায়োটেকনোলজি"
-                author="নিজস্ব প্রতিবেদক"
-                timeAgo="১১ দিন আগে"
+                author="Staff Reporter"
+                timeAgo="11 days ago"
                 customClass="w-full h-48 sm:h-60 md:h-72 md:w-1/2 "
                 imagePosition="right"
                 imageUrl="https://d1uo68v5hl2ge5.cloudfront.net/selfie.png"
@@ -69,37 +69,37 @@ const NewsCategory: React.FC<NewsCategoryProps> = ({ params, searchParams }) => 
           </div>
           <div className="w-full md:w-8/12 space-y-8 md:px-8">
             <CategoryCard
-              title="ড. শাহেদুর এনআইবির নতুন মহাপরিচালক"
+              title="Dr. Shahedur Appointed New Director of NIB"
               description="ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি (এনআইবি) এর নতুন মহাপরিচালক হলেন ড. শাহেদুর রহমান। জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের বায়োটেকনোলজি বিভাগের এই অধ্যাপক বায়োটেকনোলজি"
-              author="নিজস্ব প্রতিবেদক"
-              timeAgo="১১ দিন আগে"
+              author="Staff Reporter"
+              timeAgo="11 days ago"
               imagePosition="left"
               customClass="w-full h-48 sm:h-60 md:h-36 lg:h-40 xl:h-48 md:w-1/3"
               imageUrl="https://d1uo68v5hl2ge5.cloudfront.net/selfie.png"
             />
             <CategoryCard
-              title="ড. শাহেদুর এনআইবির নতুন মহাপরিচালক"
+              title="Dr. Shahedur Appointed New Director of NIB"
               description="ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি (এনআইবি) এর নতুন মহাপরিচালক হলেন ড. শাহেদুর রহমান। জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের বায়োটেকনোলজি বিভাগের এই অধ্যাপক বায়োটেকনোলজি"
-              author="নিজস্ব প্রতিবেদক"
-              timeAgo="১১ দিন আগে"
+              author="Staff Reporter"
+              timeAgo="11 days ago"
               imagePosition="left"
               customClass="w-full h-48 sm:h-60 md:h-36 lg:h-40 xl:h-48 md:w-1/3"
               imageUrl="https://d1uo68v5hl2ge5.cloudfront.net/selfie.png"
             />
             <CategoryCard
-              title="ড. শাহেদুর এনআইবির নতুন মহাপরিচালক"
+              title="Dr. Shahedur Appointed New Director of NIB"
               description="ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি (এনআইবি) এর নতুন মহাপরিচালক হলেন ড. শাহেদুর রহমান। জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের বায়োটেকনোলজি বিভাগের এই অধ্যাপক বায়োটেকনোলজি"
-              author="নিজস্ব প্রতিবেদক"
-              timeAgo="১১ দিন আগে"
+              author="Staff Reporter"
+              timeAgo="11 days ago"
               imagePosition="left"
               customClass="w-full h-48 sm:h-60 md:h-36 lg:h-40 xl:h-48 md:w-1/3"
               imageUrl="https://d1uo68v5hl2ge5.cloudfront.net/selfie.png"
             />
             <CategoryCard
-              title="ড. শাহেদুর এনআইবির নতুন মহাপরিচালক"
+              title="Dr. Shahedur Appointed New Director of NIB"
               description="ন্যাশনাল ইনস্টিটিউট অব বায়োটেকনোলজি (এনআইবি) এর নতুন মহাপরিচালক হলেন ড. শাহেদুর রহমান। জাহাঙ্গীরনগর বিশ্ববিদ্যালয়ের বায়োটেকনোলজি বিভাগের এই অধ্যাপক বায়োটেকনোলজি"
-              author="নিজস্ব প্রতিবেদক"
-              timeAgo="১১ দিন আগে"
+              author="Staff Reporter"
+              timeAgo="11 days ago"
               imagePosition="left"
               customClass="w-full h-48 sm:h-60 md:h-36 lg:h-40 xl:h-48 md:w-1/3"
               imageUrl="https://d1uo68v5hl2ge5.cloudfront.net/selfie.png"

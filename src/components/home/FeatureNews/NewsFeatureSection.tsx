@@ -149,10 +149,6 @@ const NewsFeatureSection: React.FC = () => {
           <NewsFeatureRightSide />
         </div>
       </div>
-
-      <BodyContainer>
-        <Ad image={ad} link="#" />
-      </BodyContainer>
     </BodyContainer>
   );
 };

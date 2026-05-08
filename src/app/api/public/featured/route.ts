@@ -20,9 +20,6 @@ export async function GET() {
           },
         },
       },
-      cacheStrategy: {
-        ttl: 300, // Cache for 5 minutes (300 seconds)
-      },
     });
 
     // return NextResponse.json(featuredNews, { status: 200 });

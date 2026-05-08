@@ -9,9 +9,6 @@ export async function GET() {
         title: true,
         slug: true,
       },
-      cacheStrategy: {
-        ttl: 300, // Cache for 5 minutes (300 seconds)
-      },
     });
 
     return NextResponse.json(categories, { status: 200 });

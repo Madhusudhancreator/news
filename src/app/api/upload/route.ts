@@ -1,4 +1,4 @@
-import { S3Client, HeadObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 
@@ -13,29 +13,10 @@ const s3 = new S3Client({
 
 const bucketName = process.env.AWS_S3_BUCKET!;
 
-// Helper: Check if file exists in S3
-async function fileExists(fileName: string): Promise<boolean> {
-  try {
-    await s3.send(new HeadObjectCommand({ Bucket: bucketName, Key: fileName }));
-    return true;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    if (error.name === "NotFound") {
-      return false;
-    }
-    throw error;
-  }
-}
-
 // Helper: Upload a single file to S3
 async function uploadFileToS3(file: File, folder: string): Promise<string> {
-  let fileName = `${folder}/${file.name}`;
-
-  // Check for existing file and rename if necessary
-  while (await fileExists(fileName)) {
-    const uniqueSuffix = nanoid(8);
-    fileName = `${folder}/${uniqueSuffix}-${file.name}`;
-  }
+  const uniqueSuffix = nanoid(8);
+  const fileName = `${folder}/${uniqueSuffix}-${file.name}`;
 
   const arrayBuffer = await file.arrayBuffer();
   const fileBuffer = Buffer.from(arrayBuffer);

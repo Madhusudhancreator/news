@@ -58,7 +58,7 @@ const VideoSection: React.FC = () => {
       <div className="pt-5">
         <div className="flex items-center justify-between border bg-base-content shadow-md rounded-xl py-1">
           <Link href="/videos" passHref>
-            <div className="text-white text-2xl px-4 ml-4 cursor-pointer">ভিডিও নিউজ</div>
+            <div className="text-white text-2xl px-4 ml-4 cursor-pointer">Video News</div>
           </Link>
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-4 mt-5">

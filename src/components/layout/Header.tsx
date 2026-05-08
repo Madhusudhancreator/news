@@ -1,406 +1,283 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import { IoSearchSharp } from "react-icons/io5";
+import { RxCross2 } from "react-icons/rx";
+import { GoDotFill } from "react-icons/go";
+import { format } from "date-fns";
 import Ad from "../common/Ad";
 import ad from "@/assets/bangla-bid-ad.jpg";
-import BodyContainer from "../common/BodyContainer";
 import bigAdImg from "@/assets/walton-ad.jpg";
+import BodyContainer from "../common/BodyContainer";
 import Btn from "../common/Btn";
-import { RxCross2 } from "react-icons/rx";
-import { format } from "date-fns";
-import { bn } from "date-fns/locale";
-import { getDate } from "bangla-calendar";
-import StayTuned from "../common/StayTuned";
-import DownloadApp from "../common/DownloadApp";
-import { GoDotFill } from "react-icons/go";
 import Dropdown from "../common/Dropdown";
+import StayTuned from "../common/StayTuned";
+// import DownloadApp from "../common/DownloadApp";
 import HorizontalScrollableText from "@/components/home/FeatureNews/HorizontalScrollableText";
 
 const Header: React.FC = () => {
-  // Function to convert numbers to Bengali numerals
-  const toBengaliNumerals = (text: string): string => {
-    const bengaliNumerals = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-    return text.replace(/\d/g, (match) => bengaliNumerals[parseInt(match)]);
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const date = new Date();
-  let formattedDate = format(date, "EEEE, d MMMM, yyyy", { locale: bn });
-
-  // Replace English numerals with Bengali numerals
-  formattedDate = toBengaliNumerals(formattedDate);
-
-  // Use the getDate method to get the formatted date in Bengali
-  const formattedDateBn = getDate(date, {
-    format: "D MMMM, YYYY",
-    calculationMethod: "BD",
-  });
+  const formattedDate = format(date, "EEEE, d MMMM, yyyy");
 
   const menuItems = [
-    { text: "সর্বশেষ", link: "/latest" },
-    { text: "জাতীয়", link: "/category/national" },
-    { text: "রাজনীতি", link: "/category/politics" },
-    { text: "অর্থনীতি", link: "/category/economy" },
-    { text: "আন্তর্জাতিক", link: "/category/international" },
-    { text: "সারাদেশ", link: "/category/crime-news" },
-    { text: "শিক্ষা", link: "/category/education" },
-    { text: "মতামত", link: "/category/opinion" },
-    { text: "খেলা", link: "/category/sports" },
-    { text: "বিনোদন", link: "/category/entertainment" },
-    { text: "সাহিত্য", link: "/category/literature" },
+    { text: "Latest", link: "/latest" },
+    { text: "National", link: "/category/national" },
+    { text: "Politics", link: "/category/politics" },
+    { text: "Economy", link: "/category/economy" },
+    { text: "International", link: "/category/international" },
+    { text: "Country", link: "/category/crime-news" },
+    { text: "Education", link: "/category/education" },
+    { text: "Opinion", link: "/category/opinion" },
+    { text: "Sports", link: "/category/sports" },
+    { text: "Entertainment", link: "/category/entertainment" },
+    { text: "Literature", link: "/category/literature" },
   ];
 
   const megaMenuItems = [
-    { text: "জাতীয়", link: "/category/national" },
-    { text: "আন্তর্জাতিক", link: "/category/international" },
-    { text: "খেলা", link: "/category/sports" },
-    { text: "সাস্থ্য", link: "/category/health" },
-    { text: "শিক্ষা", link: "/category/education" },
-    { text: "ফিচার", link: "/category/feature" },
-    { text: "ছবি", link: "/category/photo" },
-    { text: "রাজনীতি", link: "/category/politics" },
-    { text: "পশ্চিমবঙ্গ", link: "/category/west-bengal" },
-    { text: "বিনোদন", link: "/category/entertainment" },
-    { text: "লাইফস্টাইল", link: "/category/lifestyle" },
-    { text: "ধর্ম", link: "/category/religion" },
-    { text: "ভিন্নরকম", link: "/category/odd-news" },
-    { text: "সারাদেশ", link: "/category/district-news" },
-    { text: "অর্থনীতি", link: "/category/economy" },
-    { text: "প্রযুক্তি", link: "/category/technology" },
-    { text: "চিকিৎসা", link: "/category/treatment" },
-    { text: "সাহিত্য", link: "/category/literature" },
-    { text: "মতামত", link: "/category/opinion" },
-    { text: "আইন-আদালত", link: "/category/crime-news" },
-    { text: "প্রবাসে বাংলাদেশ", link: "/category/bangladeshi-diaspora" },
-    { text: "পর্যটন", link: "/category/tourism" },
-    { text: "রূপচর্চা", link: "/category/beauty-tips" },
-    { text: "গনমাধ্যম", link: "/category/mass-media" },
-    { text: "ভিডিও", link: "/category/video" },
+    { text: "National", link: "/category/national" },
+    { text: "International", link: "/category/international" },
+    { text: "Sports", link: "/category/sports" },
+    { text: "Health", link: "/category/health" },
+    { text: "Education", link: "/category/education" },
+    { text: "Feature", link: "/category/feature" },
+    { text: "Photo", link: "/category/photo" },
+    { text: "Politics", link: "/category/politics" },
+    { text: "West Bengal", link: "/category/west-bengal" },
+    { text: "Entertainment", link: "/category/entertainment" },
+    { text: "Lifestyle", link: "/category/lifestyle" },
+    { text: "Religion", link: "/category/religion" },
+    { text: "Odd News", link: "/category/odd-news" },
+    { text: "District News", link: "/category/district-news" },
+    { text: "Economy", link: "/category/economy" },
+    { text: "Technology", link: "/category/technology" },
+    { text: "Treatment", link: "/category/treatment" },
+    { text: "Literature", link: "/category/literature" },
+    { text: "Opinion", link: "/category/opinion" },
+    { text: "Crime News", link: "/category/crime-news" },
+    { text: "Bangladeshi Diaspora", link: "/category/bangladeshi-diaspora" },
+    { text: "Tourism", link: "/category/tourism" },
+    { text: "Beauty Tips", link: "/category/beauty-tips" },
+    { text: "Mass Media", link: "/category/mass-media" },
+    { text: "Video", link: "/category/video" },
   ];
 
-  function closeDialog() {
-    const dialog = document.getElementById(
-      "megaMenuModal"
-    ) as HTMLDialogElement;
-    if (dialog) {
-      dialog.close();
-    }
-  }
+  const quickLinks = [
+    { text: "About Us", link: "/" },
+    { text: "Advertisement Policy", link: "/" },
+    { text: "Comment Policy", link: "/" },
+    { text: "Privacy Policy", link: "/" },
+    { text: "Contact", link: "/" },
+    { text: "Unicode Converter", link: "/" },
+  ];
 
   return (
     <>
-      {/* header top */}
       <BodyContainer>
-        <div className="mx-auto ">
-          <div className="sm:flex hidden flex-wrap md:gap-3 gap-6 justify-center md:justify-between items-center lg:pt-9 md:pt-7 pt-5">
-            <div className="md:w-auto w-full md:order-1 order-2 text-xl md:text-[22px] md:text-left text-center sm:block hidden">
-              <p className="">
-                {formattedDate} <br className="md:block hidden" />{" "}
-                <span>{formattedDateBn}</span>
-              </p>
-            </div>
-            <div className="md:w-auto md:order-2 order-1">
-              <Link href="/">
-                <Image
-                  className="lg:w-[230px] md:w-[160px] w-[160px] mx-auto ml-0"
-                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/logocitynews.png`}
-                  alt="logo"
-                  priority={true}
-                  width={230}
-                  height={150}
-                />
-              </Link>
-            </div>
-            <div className="lg:justify-end justify-center order-3 flex lg:w-auto w-full">
-              <div className="items-center flex">
-                <Dropdown />
-              </div>
-              <div className="divider w-0 mx-0 divider-neutral divider-horizontal"></div>
-              {/* <div>
-                                <Link href={'#'} className='flex items-center gap-2 md:leading-[2px] leading-[2px] text-lg md:text-xl font-bold px-[12px]'><FaCertificate /> সার্টিফিকেট</Link>
-                            </div> */}
-              
-              <div>
-                <Link
-                  onClick={() => {
-                    const modal = document.getElementById(
-                      "search_modal"
-                    ) as HTMLDialogElement;
-                    modal?.showModal();
-                  }}
-                  href={"#"}
-                  className="flex items-center gap-1 md:leading-[2px] leading-[2px] text-xl font-medium pl-2"
-                >
-                  <IoSearchSharp /> খুঁজুন
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="sm:hidden flex justify-between items-center pt-6">
-            <div>
-              <Link href="/">
-                <Image
-                  className="w-[130px] mx-auto lg:ml-14 md:ml-14 ml-0"
-                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/logocitynews.png`}
-                  alt="logo"
-                  width={130}
-                  height={80}
-                />
-              </Link>
-            </div>
-            <div className="flex items-center gap-5">
-              <Link
-                onClick={() => {
-                  const searchModal = document.getElementById(
-                    "search_modal"
-                  ) as HTMLDialogElement;
-                  searchModal?.showModal();
-                }}
-                href={"#"}
-                className="flex items-center gap-1 md:leading-[2px] leading-[2px] text-xl font-bold pl-2"
-              >
-                <IoSearchSharp />
-              </Link>
-              <FaBars
-                onClick={() => {
-                  const megaMenuModal = document.getElementById(
-                    "megaMenuModal"
-                  ) as HTMLDialogElement;
-                  megaMenuModal?.showModal();
-                }}
-                className="text-xl cursor-pointer"
-              />
-            </div>
-          </div>
-
-          {/* menu item */}
-          <nav className="navbar md:pt-3">
-            <div className="navbar-center w-full justify-center lg:flex sticky top-0 shadow-lg py-4">
-              <div className="menu menu-horizontal justify-center items-center p-0">
-                {menuItems.map((menuItem) => (
-                  <li key={menuItem.text}>
-                    <Link
-                      className="hover:text-primary rounded-none md:text-left text-center sm:inline-block hidden text-dark text-xl md:text-[22px] font-medium"
-                      href={menuItem.link}
-                      replace={false}
-                    >
-                      {menuItem.text}
-                    </Link>
-                  </li>
-                ))}
-                <FaBars
-                  onClick={() => {
-                    const megaMenuModal = document.getElementById(
-                      "megaMenuModal"
-                    ) as HTMLDialogElement;
-                    megaMenuModal?.showModal();
-                  }}
-                  className="text-xl cursor-pointer sm:block hidden text-dark"
-                />
-
-                <dialog
-                  id="megaMenuModal"
-                  className="modal overflow-scroll bg-[#0000008e]"
-                >
-                  <div className="w-full h-full bg-white">
-                    {/* mega menu top bar */}
-                    <div className="border-b border-black">
-                      <BodyContainer>
-                        <div className="flex justify-between items-center py-7">
-                          <Link href={"/"} onClick={() => closeDialog()}>
-                            <Image
-                              className="md:w-[180px] w-[150px]"
-                              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/logocitynews.png`}
-                              alt="logo"
-                              width={180}
-                              height={90}
-                            />
-                          </Link>
-                          <form method="dialog">
-                            <button>
-                              <RxCross2 className="md:text-4xl text-3xl" />
-                            </button>
-                          </form>
-                        </div>
-                      </BodyContainer>
-                    </div>
-                    {/* mega modal */}
-                    <BodyContainer>
-                      <div className="flex md:flex-row flex-col md:gap-6 gap-4 py-6">
-                        <div className="lg:w-[65%] md:w-[100%] sm:w-[620px] sm:mx-auto w-full grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-4 grid-cols-2 lg:gap-1 md:gap-6 sm:gap-0 gap-6 text-xl md:text-2xl font-medium">
-                          <ul>
-                            {megaMenuItems.slice(0, 6).map((megaMenuItem) => (
-                              <li key={megaMenuItem.text}>
-                                <Link
-                                  className="md:text-left text-center inline-block hover:text-blue-500"
-                                  href={megaMenuItem.link}
-                                  onClick={() => closeDialog()}
-                                >
-                                  {megaMenuItem.text}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <ul>
-                            {megaMenuItems.slice(6, 12).map((megaMenuItem) => (
-                              <li key={megaMenuItem.text}>
-                                <Link
-                                  className="md:text-left text-center inline-block hover:text-blue-500"
-                                  href={megaMenuItem.link}
-                                  onClick={() => closeDialog()}
-                                >
-                                  {megaMenuItem.text}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <ul>
-                            {megaMenuItems.slice(12, 18).map((megaMenuItem) => (
-                              <li key={megaMenuItem.text}>
-                                <Link
-                                  className="md:text-left text-center inline-block hover:text-blue-500"
-                                  href={megaMenuItem.link}
-                                  onClick={() => closeDialog()}
-                                >
-                                  {megaMenuItem.text}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <ul>
-                            {megaMenuItems.slice(18, 24).map((megaMenuItem) => (
-                              <li key={megaMenuItem.text}>
-                                <Link
-                                  className="md:text-left text-center inline-block hover:text-blue-500"
-                                  href={megaMenuItem.link}
-                                  onClick={() => closeDialog()}
-                                >
-                                  {megaMenuItem.text}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                          <div className="w-full lg:col-span-4 md:col-span-2 sm:col-span-4 col-span-2 md:mt-10 mt-6">
-                            <Ad image={bigAdImg} link={"#"} />
-                          </div>
-                        </div>
-                        <div className="w-[.5px] bg-black h-auto"></div>
-                        <div className="lg:w-[34%] md:w-[100%]">
-                          <StayTuned colon={true} />
-                          <div className="mt-6 py-5">
-                            <DownloadApp colon={true} />
-                          </div>
-                          {/* special program */}
-                          {/* <div className='md:text-left text-center'>
-                                                        <h5 className='text-xl md:text-2xl mb-1'>বিশেষ প্রোগ্রাম:</h5>
-                                                        <Link href={'#'} onClick={() => closeDialog()} className='mt-3 flex items-center md:justify-start justify-center gap-2 md:leading-[2px] leading-[2px] text-lg md:text-xl font-bold px-[12px]'><FaCertificate /> সার্টিফিকেট</Link>
-                                                    </div> */}
-                          {/* important links */}
-                          <ul
-                            style={{ listStyleType: "disc" }}
-                            className="flex flex-wrap text-lg md:text-[23px] font-medium gap-y-0 list-disc border-t border-black pt-3 justify-between"
-                          >
-                            <li>
-                              <Link
-                                className="flex items-center gap-1 hover:text-blue-500"
-                                href={"/"}
-                                onClick={() => closeDialog()}
-                              >
-                                <GoDotFill className="text-sm" />
-                                আমাদের সম্পর্কে
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                className="flex items-center gap-1 hover:text-blue-500"
-                                href={"/"}
-                                onClick={() => closeDialog()}
-                              >
-                                <GoDotFill className="text-sm" />
-                                বিজ্ঞাপন নীতিমালা
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                className="flex items-center gap-1 hover:text-blue-500"
-                                href={"/"}
-                                onClick={() => closeDialog()}
-                              >
-                                <GoDotFill className="text-sm" />
-                                মন্তব্যের নীতিমালা
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                className="flex items-center gap-1 hover:text-blue-500"
-                                href={"/"}
-                                onClick={() => closeDialog()}
-                              >
-                                <GoDotFill className="text-sm" />
-                                গোপনীয়তা নীতি
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                className="flex items-center gap-1 hover:text-blue-500"
-                                href={"/"}
-                                onClick={() => closeDialog()}
-                              >
-                                <GoDotFill className="text-sm" />
-                                যোগাযোগ
-                              </Link>
-                            </li>
-                            <li>
-                              <Link
-                                className="flex items-center gap-1 hover:text-blue-500"
-                                href={"/"}
-                                onClick={() => closeDialog()}
-                              >
-                                <GoDotFill className="text-sm" />
-                                ইউনিকোড কনভার্টার
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </BodyContainer>
-                  </div>
-                </dialog>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </BodyContainer>
-      {/* header ad starts here */}
-
-      <div className="sm:-mt-0 -mt-10 mb-2 md:mb-0">
-        <HorizontalScrollableText text="অভ্যন্তরীণ বাজারে সরবরাহ ঠিক রাখতে গত ৭ ডিসেম্বর পেঁয়াজ রপ্তানি বন্ধ করে ভারত সরকার। এই ঘোষণার পরপরই অস্থিতিশীল হতে শুরু করে বাংলাদেশের পেঁয়াজের বাজার। হু হু করে বাড়তে থাকে দাম। " />
-      </div>
-      <BodyContainer>
-        <Ad image={ad} link={"#"} />
-      </BodyContainer>
-      {/* search modal */}
-      <dialog id="search_modal" className="modal bg-[#00000085]">
-        <div className="modal-box min-w-[40%] py-8 md:py-10 px-7">
-          <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <h3 className="font-medium text-3xl text-center">কি খুজতে চান?</h3>
-          <form className="space-y-3 mt-4">
-            <input
-              type="text"
-              placeholder="এখানে লিখুন"
-              className="input text-xl md:text-2xl h-[60px] input-bordered w-full"
+        {/* Desktop top bar */}
+        <div className="hidden sm:flex items-center justify-between pt-6 pb-3">
+          <p className="text-base md:text-lg">{formattedDate}</p>
+          <Link href="/">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/logocitynews.png`}
+              alt="logo"
+              width={220}
+              height={70}
+              className="w-[150px] md:w-[180px] lg:w-[220px]"
+              priority
             />
-            <Btn text={"খুজুন"} />
-          </form>
+          </Link>
+          <div className="flex items-center gap-4">
+            <Dropdown />
+            <div className="w-px h-5 bg-gray-400" />
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-1 text-base font-medium hover:text-primary transition-colors"
+            >
+              <IoSearchSharp /> Search
+            </button>
+          </div>
         </div>
-      </dialog>
+
+        {/* Mobile top bar */}
+        <div className="flex sm:hidden items-center justify-between py-4">
+          <Link href="/">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/logocitynews.png`}
+              alt="logo"
+              width={130}
+              height={50}
+              className="w-[120px]"
+              priority
+            />
+          </Link>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="text-xl"
+              aria-label="Search"
+            >
+              <IoSearchSharp />
+            </button>
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="text-xl"
+              aria-label="Menu"
+            >
+              <FaBars />
+            </button>
+          </div>
+        </div>
+      </BodyContainer>
+
+      {/* Desktop nav bar — sticky */}
+      <div className="hidden sm:block border-y border-gray-200 bg-white sticky top-0 z-40 shadow-sm">
+        <BodyContainer>
+          <nav className="flex items-center justify-center py-2 overflow-x-auto">
+            {menuItems.map((item) => (
+              <Link
+                key={item.text}
+                href={item.link}
+                className="whitespace-nowrap px-3 py-1 text-sm md:text-base font-medium hover:text-primary transition-colors"
+              >
+                {item.text}
+              </Link>
+            ))}
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="ml-2 p-1 hover:text-primary transition-colors"
+              aria-label="All categories"
+            >
+              <FaBars className="text-base" />
+            </button>
+          </nav>
+        </BodyContainer>
+      </div>
+
+      {/* Breaking news ticker */}
+      <div className="mb-2">
+        <HorizontalScrollableText text="Breaking news: Stay updated with the latest headlines from around the world. Follow us for real-time news updates and in-depth coverage." />
+      </div>
+
+      {/* Ad banner */}
+      {/* <BodyContainer>
+        <Ad image={ad} link={"#"} />
+      </BodyContainer> */}
+
+      {/* Mega menu / mobile menu overlay */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 overflow-y-auto">
+          <div className="bg-white min-h-full w-full">
+            {/* Header */}
+            <div className="border-b border-gray-200">
+              <BodyContainer>
+                <div className="flex items-center justify-between py-5">
+                  <Link href="/" onClick={() => setMenuOpen(false)}>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/logocitynews.png`}
+                      alt="logo"
+                      width={160}
+                      height={55}
+                      className="w-[130px] md:w-[160px]"
+                    />
+                  </Link>
+                  <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
+                    <RxCross2 className="text-3xl md:text-4xl" />
+                  </button>
+                </div>
+              </BodyContainer>
+            </div>
+
+            {/* Body */}
+            <BodyContainer>
+              <div className="flex flex-col lg:flex-row gap-6 py-6">
+                {/* Categories grid */}
+                <div className="lg:w-[65%]">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 text-base md:text-lg font-medium">
+                    {megaMenuItems.map((item) => (
+                      <Link
+                        key={item.text}
+                        href={item.link}
+                        onClick={() => setMenuOpen(false)}
+                        className="hover:text-primary transition-colors"
+                      >
+                        {item.text}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Vertical divider */}
+                <div className="hidden lg:block w-px bg-gray-200 self-stretch" />
+
+                {/* Sidebar */}
+                <div className="lg:w-[33%]">
+                  <StayTuned colon={true} />
+                  <div className="border-t border-gray-200 pt-4 flex flex-wrap gap-x-4 gap-y-2 text-base font-medium">
+                    {quickLinks.map((item) => (
+                      <Link
+                        key={item.text}
+                        href={item.link}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center gap-1 hover:text-primary transition-colors"
+                      >
+                        <GoDotFill className="text-xs" />
+                        {item.text}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </BodyContainer>
+          </div>
+        </div>
+      )}
+
+      {/* Search overlay */}
+      {searchOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4"
+          onClick={(e) => e.target === e.currentTarget && setSearchOpen(false)}
+        >
+          <div className="bg-white rounded-lg w-full max-w-lg py-8 px-6 relative">
+            <button
+              onClick={() => setSearchOpen(false)}
+              className="absolute right-3 top-3"
+              aria-label="Close search"
+            >
+              <RxCross2 className="text-2xl" />
+            </button>
+            <h3 className="font-medium text-2xl text-center mb-5">
+              What are you looking for?
+            </h3>
+            <form
+              className="space-y-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) {
+                  window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+                  setSearchOpen(false);
+                }
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Type here..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="input input-bordered w-full h-[55px] text-lg"
+                autoFocus
+              />
+              <Btn text={"Search"} />
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

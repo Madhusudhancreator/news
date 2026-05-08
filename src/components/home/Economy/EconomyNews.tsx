@@ -8,19 +8,20 @@ import NewsCard from "../FeatureNews/NewsCard";
 import Link from "next/link";
 import NewsItem2 from "../FeatureNews/NewsItem2";
 
-const imageBaseURL = process.env.NEXT_PUBLIC_IMAGE_URL;
+const FALLBACK_IMAGE = "https://placehold.co/350x200/e2e8f0/94a3b8?text=No+Image";
 
-interface NewsItem {
+interface ExternalNewsItem {
   id: number;
   title: string;
-  description?: string;
-  highlight_text?: string;
-  featured_image?: string;
+  description?: string | null;
+  link: string;
+  source_name?: string | null;
+  image_url?: string | null;
 }
 
 const EcomomyNews: React.FC = () => {
-  const [featureNews, setFeatureNews] = useState<NewsItem[]>([]);
-  const [entertainmentNews, setEntertainmentNews] = useState<NewsItem[]>([]);
+  const [healthNews, setHealthNews] = useState<ExternalNewsItem[]>([]);
+  const [entertainmentNews, setEntertainmentNews] = useState<ExternalNewsItem[]>([]);
   const [deviceType, setDeviceType] = useState<string>("desktop");
   const [hasFetched, setHasFetched] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -28,39 +29,24 @@ const EcomomyNews: React.FC = () => {
   useEffect(() => {
     if (hasFetched) return;
 
-    const fetchCategoryNews = async (categoryId: number, limit: number) => {
-      try {
-        const response = await fetch(`/api/public/news/category`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            categoryId: categoryId,
-            newsItem: limit,
-            video: false,
-          }),
-        });
-
-        if (!response.ok) throw new Error(`Failed to fetch news for category ${categoryId}`);
-        const data: NewsItem[] = await response.json();
-        return data;
-      } catch (error) {
-        console.error(`Error fetching news for category ${categoryId}:`, error);
-        return [];
-      }
-    };
-
     const fetchAllNews = async () => {
-      const [featureData, entertainmentData] = await Promise.all([
-        fetchCategoryNews(2, 5), // Feature category ID
-        fetchCategoryNews(1, 12), // Entertainment category ID
-      ]);
-
-      setFeatureNews(featureData);
-      setEntertainmentNews(entertainmentData);
-      setHasFetched(true);
-      setLoading(false);
+      try {
+        const [healthRes, entertainmentRes] = await Promise.all([
+          fetch(`/api/public/external-news?category=health&limit=5`),
+          fetch(`/api/public/external-news?category=entertainment&limit=12`),
+        ]);
+        const [healthData, entertainmentData] = await Promise.all([
+          healthRes.json(),
+          entertainmentRes.json(),
+        ]);
+        setHealthNews(healthData);
+        setEntertainmentNews(entertainmentData);
+        setHasFetched(true);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchAllNews();
@@ -68,84 +54,70 @@ const EcomomyNews: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setDeviceType("mobile");
-      } else {
-        setDeviceType("desktop");
-      }
+      setDeviceType(window.innerWidth < 1024 ? "mobile" : "desktop");
     };
-
-    // Initialize on mount
     handleResize();
-
-    // Add event listener
     window.addEventListener("resize", handleResize);
-
-    // Cleanup event listener
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (loading) {
-    return null;
-  }
+  if (loading) return null;
 
   return (
     <BodyContainer>
       <div className="md:space-x-4 lg:space-x-5 md:flex space-y-4 md:space-y-0 pt-2 md:pt-6">
-        {/* Feature News Section */}
+        {/* Health Section */}
         <div className="w-full md:w-1/2 lg:w-[35%] xl:w-[33%]">
           <div className="flex items-center justify-between border bg-base-content shadow-md rounded-xl py-1 mt-4 sm:mt-0">
-            <Link href="/category/feature" passHref>
-              <div className="text-white text-2xl px-4 ml-4 cursor-pointer">ফিচার</div>
+            <Link href="/category/health" passHref>
+              <div className="text-white text-2xl px-4 ml-4 cursor-pointer">Health</div>
             </Link>
           </div>
 
           <div className="w-full space-y-2 sm:space-y-0 sm:space-x-4 pt-4 sm:flex md:flex-col md:space-x-0 md:space-y-2">
-            {featureNews[0] && (
+            {healthNews[0] && (
               <div className="sm:w-1/2 md:w-full">
-                <Link href={`/news/details/${featureNews[0].id}`} passHref>
+                <a href={healthNews[0].link} target="_blank" rel="noopener noreferrer">
                   <NewsCard
-                    title={featureNews[0].title}
-                    highlight={featureNews[0].highlight_text || ""}
-                    description={featureNews[0].description || ""}
-                    imageSrc={`${imageBaseURL}/${featureNews[0]?.featured_image}`}
+                    title={healthNews[0].title}
+                    highlight={healthNews[0].source_name || ""}
+                    description={healthNews[0].description || ""}
+                    imageSrc={healthNews[0].image_url || FALLBACK_IMAGE}
                     clamp={3}
                     maxLength={180}
                   />
-                </Link>
+                </a>
               </div>
             )}
             <div className="space-y-2 sm:w-1/2 md:w-full">
-              {featureNews.slice(1, deviceType === "mobile" ? 5 : 3).map((item) => (
-                <Link href={`/news/details/${item.id}`} key={item.id} passHref>
-                  <NewsItem2 highlight={item.highlight_text} text={item.title} Icon={false} onClick={() => {}} />
-                </Link>
+              {healthNews.slice(1, deviceType === "mobile" ? 5 : 3).map((item) => (
+                <a href={item.link} key={item.id} target="_blank" rel="noopener noreferrer">
+                  <NewsItem2 highlight={item.source_name || ""} text={item.title} Icon={false} onClick={() => {}} />
+                </a>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Entertainment News Section */}
+        {/* Entertainment Section */}
         <div className="block md:w-1/2 lg:w-[65%] xl:w-[66%]">
           <div className="flex items-center justify-between border bg-base-content shadow-md rounded-xl py-1">
             <Link href="/category/entertainment" passHref>
-              <div className="text-white text-2xl px-4 ml-4 cursor-pointer">বিনোদন</div>
+              <div className="text-white text-2xl px-4 ml-4 cursor-pointer">Entertainment</div>
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2 pt-4">
             {entertainmentNews.slice(0, deviceType === "mobile" ? 8 : entertainmentNews.length).map((item) => (
-              <Link href={`/news/details/${item.id}`} key={item.id} passHref>
+              <a href={item.link} key={item.id} target="_blank" rel="noopener noreferrer">
                 <NewsCardHorizontal
-                  imageSrc={`${imageBaseURL}/${item.featured_image}`}
-                  highlight={item.highlight_text || ""}
+                  imageSrc={item.image_url || FALLBACK_IMAGE}
+                  highlight={item.source_name || ""}
                   title={item.title}
                   right={false}
                   left={true}
                 />
-              </Link>
+              </a>
             ))}
           </div>
         </div>

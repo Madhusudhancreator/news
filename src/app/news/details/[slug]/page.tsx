@@ -109,7 +109,7 @@ export default function NewsDetails({ params }: NewsDetailsProps) {
                 className="mx-auto text-center text-2xl xl:text-3xl h-fit text-red-500 border-b-2 border-red-500"
                 href={isVideoNews ? "#" : `/category/${category?.slug ?? "#"}`}
               >
-                {isVideoNews ? "ভিডিও নিউজ" : category?.title ?? "Uncategorized"}
+                {isVideoNews ? "Video News" : category?.title ?? "Uncategorized"}
               </Link>
 
               <h1 className="text-pretty text-3xl font-normal tracking-tight text-gray-900 pt-3 pb-2 sm:text-4xl md:py-4">
@@ -117,7 +117,7 @@ export default function NewsDetails({ params }: NewsDetailsProps) {
               </h1>
 
               <ReporterProfile
-                reporterName={news.reporter_name ?? "নিজস্ব প্রতিবেদক"}
+                reporterName={news.reporter_name ?? "Our Reporter"}
                 publishedAt={news.created_at}
                 newsId={slug}
                 onZoomIn={zoomIn}
@@ -192,7 +192,7 @@ export default function NewsDetails({ params }: NewsDetailsProps) {
           <div className="w-full mt-8">
             <div className="border-l-8 border-red-500 mb-2 mt-2">
               <h1 className="text-black text-2xl md:text-4xl ml-4 hover:text-red-500">
-                {isVideoNews ? "আরও ভিডিও নিউজ দেখুন" : `${category?.title ?? "এই বিভাগ"} নিয়ে আরও পড়ুন`}
+                {isVideoNews ? "Watch More Video News" : `${category?.title ?? "this category"} নিয়ে আরও পড়ুন`}
               </h1>
             </div>
             <div className="border-b-2 border-gray-500 mb-2"></div>

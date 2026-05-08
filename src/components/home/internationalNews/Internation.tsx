@@ -3,136 +3,118 @@
 
 import React, { useEffect, useState } from "react";
 import BodyContainer from "../../common/BodyContainer";
-import Ad from "../../common/Ad";
 import NewsCardHorizontal from "../HorizontalCard";
 import NewsItem2 from "../FeatureNews/NewsItem2";
 import NewsCard from "../FeatureNews/NewsCard";
 import Link from "next/link";
 
-const imageBaseURL = process.env.NEXT_PUBLIC_IMAGE_URL;
+const FALLBACK_IMAGE = "https://placehold.co/350x200/e2e8f0/94a3b8?text=No+Image";
 
-interface NewsItem {
+interface ExternalNewsItem {
   id: number;
   title: string;
-  description?: string;
-  highlight_text?: string;
-  featured_image?: string;
+  description?: string | null;
+  link: string;
+  source_name?: string | null;
+  image_url?: string | null;
 }
 
 const DynamicNewsSection: React.FC = () => {
-  const [leftSectionNews, setLeftSectionNews] = useState<NewsItem[]>([]);
-  const [rightSectionNews, setRightSectionNews] = useState<NewsItem[]>([]);
+  const [worldNews, setWorldNews] = useState<ExternalNewsItem[]>([]);
+  const [scienceNews, setScienceNews] = useState<ExternalNewsItem[]>([]);
   const [hasFetched, setHasFetched] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (hasFetched) return; // Prevent multiple API calls
-  
-    const fetchCategoryNews = async (categoryId: number, limit: number) => {
+    if (hasFetched) return;
+
+    const fetchAllNews = async () => {
       try {
-        const response = await fetch(`/api/public/news/category`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            categoryId: categoryId,
-            newsItem: limit,
-            video: false, // Pass additional parameters as needed
-          }),
-        });
-  
-        if (!response.ok) throw new Error(`Failed to fetch news for category ${categoryId}`);
-        const data: NewsItem[] = await response.json();
-        return data;
+        const [worldRes, scienceRes] = await Promise.all([
+          fetch(`/api/public/external-news?category=world&limit=6`),
+          fetch(`/api/public/external-news?category=science&limit=5`),
+        ]);
+        const [worldData, scienceData] = await Promise.all([
+          worldRes.json(),
+          scienceRes.json(),
+        ]);
+        setWorldNews(worldData);
+        setScienceNews(scienceData);
+        setHasFetched(true);
       } catch (error) {
-        console.error(`Error fetching news for category ${categoryId}:`, error);
-        return [];
+        console.error("Error fetching news:", error);
+      } finally {
+        setLoading(false);
       }
     };
-  
-    const fetchAllNews = async () => {
-      const [newsForLeftSection, newsForRightSection] = await Promise.all([
-        fetchCategoryNews(4, 6), // Category ID for left section
-        fetchCategoryNews(20, 5), // Category ID for right section
-      ]);
-      setLeftSectionNews(newsForLeftSection);
-      setRightSectionNews(newsForRightSection);
-      setHasFetched(true);
-      setLoading(false);
-    };
-  
+
     fetchAllNews();
   }, [hasFetched]);
-  
 
-  if (loading) {
-    return null;
-  }
+  if (loading) return null;
 
   return (
     <BodyContainer>
       <div className="pt-2">
         <div className="xl:flex space-y-4 md:space-y-0 xl:space-x-5 pt-2 md:pt-5">
-          {/* Left Section */}
+          {/* Left - International */}
           <div className="w-full mx-auto xl:w-[68%]">
             <div className="flex items-center justify-between border bg-base-content shadow-md rounded-xl py-1">
               <Link href="/category/international" passHref>
-                <div className="text-white text-2xl px-4 ml-4 cursor-pointer">আন্তর্জাতিক</div>
+                <div className="text-white text-2xl px-4 ml-4 cursor-pointer">International</div>
               </Link>
             </div>
 
             <div className="space-y-1 md:space-y-0 2xl:pt-10 w-full md:flex md:space-x-4">
               <div className="w-full md:w-1/2 mt-5">
-                {/* Main NewsCard */}
-                {leftSectionNews[0] && (
-                  <Link href={`/news/details/${leftSectionNews[0].id}`} passHref>
+                {worldNews[0] && (
+                  <a href={worldNews[0].link} target="_blank" rel="noopener noreferrer">
                     <NewsCard
-                      title={leftSectionNews[0].title}
-                      description={leftSectionNews[0].description}
-                      imageSrc={`${imageBaseURL}/${leftSectionNews[0].featured_image}`}
-                      highlight={leftSectionNews[0].highlight_text}
+                      title={worldNews[0].title}
+                      description={worldNews[0].description || ""}
+                      imageSrc={worldNews[0].image_url || FALLBACK_IMAGE}
+                      highlight={worldNews[0].source_name || ""}
                       clamp={3}
                       maxLength={260}
                     />
-                  </Link>
+                  </a>
                 )}
               </div>
 
               <div className="w-full md:w-1/2 grid grid-cols-1 gap-2 pt-4 md:pt-5 px-0">
-                {leftSectionNews.slice(1).map((news, index) => (
-                  <Link href={`/news/details/${news.id}`} key={index} passHref>
+                {worldNews.slice(1).map((news, index) => (
+                  <a href={news.link} key={index} target="_blank" rel="noopener noreferrer">
                     <NewsCardHorizontal
-                      imageSrc={`${imageBaseURL}/${news.featured_image}`}
-                      highlight={news.highlight_text || ""}
+                      imageSrc={news.image_url || FALLBACK_IMAGE}
+                      highlight={news.source_name || ""}
                       title={news.title}
                       right={false}
                       left={false}
                     />
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right Section */}
+          {/* Right - Science */}
           <div className="w-full xl:w-[32%] pt-4 md:pt-4 xl:pt-0">
             <div className="flex items-center justify-between border bg-base-content shadow-md rounded-xl py-1">
-              <Link href="/category/law" passHref>
-                <div className="text-white text-2xl px-4 ml-4 cursor-pointer">আইন-আদালত</div>
+              <Link href="/category/science" passHref>
+                <div className="text-white text-2xl px-4 ml-4 cursor-pointer">Science</div>
               </Link>
             </div>
 
             <div className="gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 mt-5">
-              {rightSectionNews.map((news, index) => (
-                <Link href={`/news/details/${news.id}`} key={index} passHref>
+              {scienceNews.map((news, index) => (
+                <a href={news.link} key={index} target="_blank" rel="noopener noreferrer">
                   <NewsItem2
                     text={news.title}
-                    highlight={news?.highlight_text}
+                    highlight={news.source_name || ""}
                     Icon={false}
                     onClick={() => {}}
                   />
-                </Link>
+                </a>
               ))}
             </div>
           </div>

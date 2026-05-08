@@ -11,7 +11,7 @@ const DownloadApp: React.FC<DownloadAppProps> = ({ colon }) => {
     return (
         <div>
             <h5 className='text-xl md:text-2xl mb-3 md:text-left text-center'>
-                মোবাইল অ্যাপ ডাউনলোড করুন{colon && ':'}
+                Download Mobile App{colon && ':'}
             </h5>
             <div className='flex gap-2 md:gap-4 items-center md:mt-[5px] md:justify-start justify-center'>
                 <Link href={"/"}><Image className='rounded-md md:w-[160px] w-[120px] mx-auto' src={playStore} alt='play store'></Image></Link>

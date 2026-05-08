@@ -93,6 +93,20 @@ model VideoStory {
   updated_at DateTime @updatedAt
 }
 
+model ExternalNews {
+  id          Int       @id @default(autoincrement())
+  article_id  String    @unique
+  title       String
+  description String?   @db.Text
+  link        String
+  source_name String?
+  image_url   String?
+  pub_date    DateTime?
+  category    String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
 enum Role {
   ADMIN
   USER

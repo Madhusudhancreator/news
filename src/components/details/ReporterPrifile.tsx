@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 import { parseISO, format } from "date-fns";
-import { bn } from "date-fns/locale";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -24,16 +23,13 @@ interface ReporterProfileProps {
 }
 
 /* ─────────────────────────────── */
-const toBnDigits = (s: string) =>
-  s.replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[Number(d)]);
-
-const buildBanglaDateTime = (iso: string) => {
+const buildDateTime = (iso: string) => {
   const date = parseISO(iso);
-  const calendar = format(date, "EEEE, d MMMM yyyy", { locale: bn });
-  const time = format(date, "h:mm", { locale: bn });
+  const calendar = format(date, "EEEE, d MMMM yyyy");
+  const time = format(date, "h:mm");
   const h = date.getHours();
-  const period = h < 12 ? "পূর্বাহ্ন" : h === 12 ? "মধ্যাহ্ন" : "অপরাহ্ন";
-  return toBnDigits(`${calendar}, ${time} ${period}`);
+  const period = h < 12 ? "AM" : h === 12 ? "Noon" : "PM";
+  return `${calendar}, ${time} ${period}`;
 };
 /* ─────────────────────────────── */
 
@@ -44,7 +40,7 @@ const ReporterProfile: React.FC<ReporterProfileProps> = ({
   onZoomIn,
   onZoomOut,
 }) => {
-  const pubDateTime = buildBanglaDateTime(publishedAt);
+  const pubDateTime = buildDateTime(publishedAt);
   const shareUrl = encodeURIComponent(`https://newscity24.com/news/details/${newsId}`);
   const iconClass = "h-4 w-4 md:h-5 md:w-5 text-gray-600 hover:text-primary transition align-bottom";
 
@@ -84,9 +80,9 @@ const ReporterProfile: React.FC<ReporterProfileProps> = ({
         <span className="w-px h-5 bg-gray-300" />
 
         {/* zoom/print actions */}
-        <button title="বড় করুন" onClick={onZoomIn}><FontAwesomeIcon icon={faPlus} className={iconClass} /></button>
-        <button title="ছোট করুন" onClick={onZoomOut}><FontAwesomeIcon icon={faMinus} className={iconClass} /></button>
-        <button title="প্রিন্ট করুন" onClick={() => window.print()}><FontAwesomeIcon icon={faPrint} className={iconClass} /></button>
+        <button title="Zoom In" onClick={onZoomIn}><FontAwesomeIcon icon={faPlus} className={iconClass} /></button>
+        <button title="Zoom Out" onClick={onZoomOut}><FontAwesomeIcon icon={faMinus} className={iconClass} /></button>
+        <button title="Print" onClick={() => window.print()}><FontAwesomeIcon icon={faPrint} className={iconClass} /></button>
       </div>
     </div>
   );
