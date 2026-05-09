@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { SessionStrategy } from "next-auth";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import prisma from "../../prisma/prisma";
 import { Role } from "../../types/next-auth";
 

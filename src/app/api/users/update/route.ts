@@ -1,7 +1,7 @@
 // api/users/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../../prisma/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // PATCH: Update a user by ID
 export async function PATCH(req: NextRequest) {

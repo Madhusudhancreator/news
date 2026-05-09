@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '../../../../prisma/prisma';
 import { NextRequest } from 'next/server';
 import { Prisma, Role } from '@prisma/client';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 // POST: Create a new user
 export async function POST(req: NextRequest) {
