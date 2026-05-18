@@ -11,24 +11,26 @@ if (process.env.NODE_ENV === "development") {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Force webpack to use the WASM Prisma runtime (not the Node.js library engine)
-    // so that Cloudflare Workers (which lacks fs.readdir) can run Prisma queries
+    // Force webpack to bundle @prisma/client as wasm.js (not index.js).
+    // index.js (LibraryEngine) calls fs.readdir which is not implemented in Cloudflare Workers.
+    // wasm.js lazily loads the WASM engine — with PrismaNeonHTTP driver adapter it is never invoked.
     webpack: (config, { isServer }) => {
       if (isServer) {
-        // Alias @prisma/client to our WASM proxy before externals are checked
+        // Alias @prisma/client to the WASM variant before webpack externalizes it
         config.resolve.alias = {
           ...config.resolve.alias,
-          "@prisma/client$": resolve(__dirname, "prisma/prisma-client-wasm.js"),
+          "@prisma/client$": resolve(__dirname, "node_modules/.prisma/client/wasm.js"),
         };
 
-        // Enable WebAssembly for the Prisma WASM engine (only loaded if no driver adapter is used)
-        config.experiments = { ...config.experiments, asyncWebAssembly: true };
+        // Treat .wasm files as static assets (no asyncWebAssembly → no fs.readFile chunk loading).
+        // getQueryEngineWasmModule is never called when using PrismaNeonHTTP adapter.
+        config.module.rules.push({ test: /\.wasm$/, type: "asset/resource" });
 
         // Prevent @prisma/client from being externalized so the alias takes effect
         const originalExternals = config.externals ?? [];
         config.externals = [
           (ctx, cb) => {
-            if (ctx.request === "@prisma/client" || ctx.request === "@prisma/client$") return cb(); // bundle it
+            if (ctx.request === "@prisma/client" || ctx.request === "@prisma/client$") return cb();
             if (typeof originalExternals === "function") return originalExternals(ctx, cb);
             const fns = Array.isArray(originalExternals) ? originalExternals : [originalExternals];
             const fn = fns.find((e) => typeof e === "function");
