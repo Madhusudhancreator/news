@@ -32,6 +32,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Cloudflare / Wrangler (contains bundled secrets at runtime)
+.wrangler/
+.open-next/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
