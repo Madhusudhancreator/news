@@ -22,7 +22,11 @@ const nextConfig = {
           },
           {
             protocol: 'https',
-            hostname: "placehold.co" ,
+            hostname: "placehold.co",
+          },
+          {
+            protocol: 'https',
+            hostname: "news-application-first-bucket.s3.ap-south-1.amazonaws.com",
           },
         ],
         unoptimized: true,
@@ -47,14 +51,6 @@ const nextConfig = {
                 ],
           },
         ];
-      },
-      turbopack: {
-        rules: {
-          '*.svg': {
-            loaders: ['@svgr/webpack'],
-            as: '*.js',
-          },
-        },
       },
 };
 
