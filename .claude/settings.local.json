@@ -48,7 +48,18 @@
       "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsx -e \"\nimport prisma from './prisma/prisma';\nconst users = await prisma.user.findMany\\({ select: { id: true, email: true }, take: 3 }\\);\nconst cats = await prisma.category.findMany\\({ select: { id: true, slug: true, title: true } }\\);\nconsole.log\\('USERS:' + JSON.stringify\\(users\\)\\);\nconsole.log\\('CATS:' + JSON.stringify\\(cats\\)\\);\nawait prisma.\\\\$disconnect\\(\\);\n\" 2>&1 | grep -E \"USERS:|CATS:|Error\")",
       "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsx -e \"import prisma from './prisma/prisma'; const u = await prisma.user.findMany\\({ select: { id: true, email: true }, take: 3 }\\); const c = await prisma.category.findMany\\({ select: { id: true, slug: true, title: true } }\\); console.log\\(JSON.stringify\\({u,c}\\)\\); await prisma.\\\\$disconnect\\(\\);\" 2>&1)",
       "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsx prisma/seed.ts 2>&1)",
-      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsc --noEmit 2>&1 | grep -E \"search|Error\" | head -20)"
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsc --noEmit 2>&1 | grep -E \"search|Error\" | head -20)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npm run build:cloudflare 2>&1)",
+      "Bash(cmd.exe /c \"tasklist | findstr -i node\" 2>&1)",
+      "Bash(cmd.exe /c \"tasklist /FI \\\\\"IMAGENAME eq node.exe\\\\\"\" 2>&1)",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"Remove-Item -Path 'D:\\\\\\\\creative_touch\\\\\\\\nextjs-newspaper-CMS\\\\\\\\.open-next' -Recurse -Force -ErrorAction SilentlyContinue; Write-Host 'Done'\\\\\"\" 2>&1)",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"Get-Process | Where-Object {$_.MainWindowTitle -like '*newspaper*' -or $_.ProcessName -like '*wrangler*' -or $_.ProcessName -like '*next*'}\\\\\"\" 2>&1)",
+      "Bash(cmd.exe /c \"wsl --status\" 2>&1)",
+      "Bash(cmd.exe /c \"wsl echo ok\" 2>&1)",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"$folder = 'D:\\\\\\\\creative_touch\\\\\\\\nextjs-newspaper-CMS\\\\\\\\.open-next'; if \\(Test-Path $folder\\) { Get-ChildItem $folder -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue; Remove-Item $folder -Force -Recurse -ErrorAction SilentlyContinue }; Write-Host 'Cleanup done'\\\\\"\" 2>&1)",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"Rename-Item 'D:\\\\\\\\creative_touch\\\\\\\\nextjs-newspaper-CMS\\\\\\\\.open-next' 'D:\\\\\\\\creative_touch\\\\\\\\nextjs-newspaper-CMS\\\\\\\\.open-next-old' -ErrorAction SilentlyContinue; Write-Host 'Renamed'\\\\\"\" 2>&1 && cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm run build:cloudflare 2>&1)",
+      "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm run build:cloudflare 2>&1)",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"Get-MpPreference | Select-Object -ExpandProperty ExclusionPath\\\\\"\" 2>&1)"
     ]
   }
 }
