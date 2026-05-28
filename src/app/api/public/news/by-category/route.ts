@@ -27,22 +27,25 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const allNews = await prisma.news.findMany({
-      where: internalWhere,
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        highlight_text: true,
-        featured_image: true,
-        reporter_name: true,
-        created_at: true,
-      },
-      orderBy: { created_at: "desc" },
-    });
+    const [total, paginated] = await Promise.all([
+      prisma.news.count({ where: internalWhere }),
+      prisma.news.findMany({
+        where: internalWhere,
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          highlight_text: true,
+          featured_image: true,
+          reporter_name: true,
+          created_at: true,
+        },
+        orderBy: { created_at: "desc" },
+        skip,
+        take: limit,
+      }),
+    ]);
 
-    const total = allNews.length;
-    const paginated = allNews.slice(skip, skip + limit);
     const hasMore = skip + paginated.length < total;
 
     return NextResponse.json({

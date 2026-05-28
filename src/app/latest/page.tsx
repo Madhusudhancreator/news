@@ -1,13 +1,9 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import HomeLayout from "../../components/layouts/HomeLayout";
-import Ads from "../../assets/super-white-ad.webp";
-import ad from "../../assets/bangla-bid-ad.jpg";
 import ShortNewsCard from "../../components/home/FeatureNews/ShortNewsCard";
-import Ad from "../../components/common/Ad";
 import CategoryCard from "../../components/category/CategoryCard";
 import NewsFeatureRightSide from "../../components/home/FeatureNews/NewsFeatureRightSide";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -126,16 +122,7 @@ const LatestNews: React.FC = () => {
                   </Link>
                 )}
               </div>
-              <div className="block lg:w-1/4 mt-4 lg:mt-0">
-                <Image
-                  width={250}
-                  height={220}
-                  src={Ads}
-                  alt="Advertisement"
-                  className="w-full h-[192px] object-fill"
-                  priority
-                />
-              </div>
+              <div className="hidden lg:block lg:w-1/4 mt-4 lg:mt-0" />
             </div>
 
             {/* Short news grid */}
@@ -157,11 +144,6 @@ const LatestNews: React.FC = () => {
                 ))}
               </div>
             )}
-
-            {/* Ad banner */}
-            <div className="py-4">
-              <Ad image={ad} link="#" />
-            </div>
 
             {/* List + sidebar */}
             {listItems.length > 0 && (

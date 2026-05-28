@@ -33,12 +33,11 @@ const Footer: React.FC = () => {
                 <div className='bg-base-content py-1 px-5 my-4 md:my-8'>
                     <BodyContainer>
                         <ul className='flex flex-wrap lg:justify-between justify-center md:gap-x-8 gap-x-5 gap-y-2 md:gap-y-3 text-white text-lg md:text-2xl'>
-                            <li className="hover:text-blue-500"><Link href={"/about"}>About Us</Link></li>
-                            <li className="hover:text-blue-500"><Link href={"/advertisement"}>Advertisement Policy</Link></li>
-                            <li className="hover:text-blue-500"><Link href={"/comment-policy"}>Comment Policy</Link></li>
-                            <li className="hover:text-blue-500"><Link href={"/privacy-policy"}>Privacy Policy</Link></li>
-                            <li className="hover:text-blue-500"><Link href={"/contact"}>Contact</Link></li>
-                            <li className="hover:text-blue-500"><Link href={"/"}>Unicode Converter</Link></li>
+                            <li className="hover:text-blue-500"><Link href="/about">About Us</Link></li>
+                            <li className="hover:text-blue-500"><Link href="/advertisement">Advertisement Policy</Link></li>
+                            <li className="hover:text-blue-500"><Link href="/comment-policy">Comment Policy</Link></li>
+<li className="hover:text-blue-500"><Link href="/privacy-policy">Privacy Policy</Link></li>
+                            <li className="hover:text-blue-500"><Link href="/contact">Contact</Link></li>
                         </ul>
                     </BodyContainer>
                 </div>

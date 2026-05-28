@@ -10,7 +10,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="pb-16 sm:pb-0">{children}</main>
       <Footer />
     </>
   );

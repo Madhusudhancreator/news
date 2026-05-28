@@ -31,7 +31,24 @@
       "Bash(find \"D:/creative_touch/nextjs-newspaper-CMS/node_modules\" -name \"*ReadFile*Wasm*\" 2>/dev/null | head -5)",
       "Bash(find \"D:/creative_touch/nextjs-newspaper-CMS/node_modules/next/dist/compiled/webpack\" -name \"*.js\" | xargs grep -l \"readFile.*wasm\\\\|wasm.*readFile\" 2>/dev/null | head -5)",
       "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst content = fs.readFileSync\\('D:/creative_touch/nextjs-newspaper-CMS/.open-next/server-functions/default/handler.mjs', 'utf8'\\);\n\n// Find all occurrences of getQueryEngineWasmModule\nlet idx = 0;\nlet count = 0;\nwhile \\(true\\) {\n  const found = content.indexOf\\('getQueryEngineWasmModule', idx\\);\n  if \\(found < 0\\) break;\n  count++;\n  console.log\\('Occurrence', count, 'at char', found\\);\n  // Show context\n  const context = content.slice\\(Math.max\\(0, found - 200\\), found + 200\\);\n  console.log\\('...', context.slice\\(0, 100\\), '...'\\);\n  idx = found + 1;\n}\n\")",
-      "Bash(rm \"D:/creative_touch/nextjs-newspaper-CMS/src/app/api/public/external-news/route.ts\" && rm \"D:/creative_touch/nextjs-newspaper-CMS/src/lib/newsSyncService.ts\" && echo \"Deleted API files\")"
+      "Bash(rm \"D:/creative_touch/nextjs-newspaper-CMS/src/app/api/public/external-news/route.ts\" && rm \"D:/creative_touch/nextjs-newspaper-CMS/src/lib/newsSyncService.ts\" && echo \"Deleted API files\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && node -e \"require\\('nanoid'\\)\" 2>&1 || echo \"nanoid NOT found\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx wrangler deploy 2>&1)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://newspaper.madhusudhan-2ec.workers.dev/ 2>&1)",
+      "Bash(curl -s -w \"\\\\nHTTP_STATUS:%{http_code}\" https://newspaper.madhusudhan-2ec.workers.dev/api/public/latest-news 2>&1)",
+      "Bash(curl -s -w \"\\\\nHTTP_STATUS:%{http_code}\" https://newspaper.madhusudhan-2ec.workers.dev/api/public/featured 2>&1)",
+      "Bash(curl -s -w \"\\\\nHTTP_STATUS:%{http_code}\" https://newspaper.madhusudhan-2ec.workers.dev/api/public/video-story 2>&1)",
+      "Bash(curl -s -w \"\\\\nHTTP_STATUS:%{http_code}\" https://newspaper.madhusudhan-2ec.workers.dev/api/category 2>&1)",
+      "Bash(curl -s -w \"\\\\nHTTP_STATUS:%{http_code}\" \"https://newspaper.madhusudhan-2ec.workers.dev/api/public/news/by-category?slug=test&page=1&limit=5\" 2>&1)",
+      "Bash(cat \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\\\\node_modules\\\\@prisma\\\\client\\\\package.json\" | python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(list\\(d.get\\('exports',{}\\).keys\\(\\)\\)[:20]\\)\" 2>&1)",
+      "Bash(ls \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\\\\node_modules\\\\.prisma\\\\client\\\\\" 2>&1 | grep -E \"wasm|edge\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx @opennextjs/cloudflare build 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npm run build 2>&1 | tail -120)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsx -e \"\nimport prisma from './prisma/prisma';\nconst users = await prisma.user.findMany\\({ select: { id: true, email: true }, take: 3 }\\);\nconst cats = await prisma.category.findMany\\({ select: { id: true, slug: true, title: true } }\\);\nconsole.log\\('Users:', JSON.stringify\\(users\\)\\);\nconsole.log\\('Categories:', JSON.stringify\\(cats\\)\\);\nawait prisma.\\\\$disconnect\\(\\);\n\" 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsx -e \"\nimport prisma from './prisma/prisma';\nconst users = await prisma.user.findMany\\({ select: { id: true, email: true }, take: 3 }\\);\nconst cats = await prisma.category.findMany\\({ select: { id: true, slug: true, title: true } }\\);\nconsole.log\\('USERS:' + JSON.stringify\\(users\\)\\);\nconsole.log\\('CATS:' + JSON.stringify\\(cats\\)\\);\nawait prisma.\\\\$disconnect\\(\\);\n\" 2>&1 | grep -E \"USERS:|CATS:|Error\")",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsx -e \"import prisma from './prisma/prisma'; const u = await prisma.user.findMany\\({ select: { id: true, email: true }, take: 3 }\\); const c = await prisma.category.findMany\\({ select: { id: true, slug: true, title: true } }\\); console.log\\(JSON.stringify\\({u,c}\\)\\); await prisma.\\\\$disconnect\\(\\);\" 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsx prisma/seed.ts 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && npx tsc --noEmit 2>&1 | grep -E \"search|Error\" | head -20)"
     ]
   }
 }

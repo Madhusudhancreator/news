@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../prisma/prisma";
 import { Prisma } from "@prisma/client";
+import { neon } from "@neondatabase/serverless";
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create the news entry in the database
+    // Step 1: Create news row without nested category connect (avoids implicit transaction)
     const news = await prisma.news.create({
       data: {
         title,
@@ -47,18 +48,27 @@ export async function POST(req: NextRequest) {
         reporter_name: reporter_name || null,
         publish_status,
         tag: tag || null,
-        categories: {
-          connect: categories.map((id: number) => ({ id })), // Ensure `id` is valid
-        },
         featured_image: featured_image || null,
         meta_title: meta_title || null,
         meta_description: meta_description || null,
         focus_keyword: focus_keyword || null,
         video_url: video_url || null,
         meta_image: meta_image || null,
-        created_by_id: created_by_id,
+        created_by_id,
       },
     });
+
+    // Step 2: Insert category links via raw SQL (Neon HTTP adapter doesn't support transactions)
+    if (categories.length > 0) {
+      const sql = neon(process.env.DATABASE_URL!);
+      for (const catId of categories as number[]) {
+        await sql`
+          INSERT INTO "_CategoryToNews" ("A", "B")
+          VALUES (${catId}, ${news.id})
+          ON CONFLICT DO NOTHING
+        `;
+      }
+    }
 
     return NextResponse.json(
       { success: true, message: "News added successfully.", news },
