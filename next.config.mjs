@@ -6,7 +6,6 @@ if (process.env.NODE_ENV === "development") {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    metadataBase: new URL(process.env.NEXTAUTH_URL || "https://newscity24.com"),
     images: {
         remotePatterns: [
           {
