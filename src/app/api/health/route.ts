@@ -24,7 +24,7 @@ export async function GET() {
   let prismaStatus = "not_tested";
   let prismaError = null;
   try {
-    const prisma = (await import("../../../../../prisma/prisma")).default;
+    const prisma = (await import("../../../../prisma/prisma")).default;
     await prisma.news.count();
     prismaStatus = "connected";
   } catch (e: any) {
