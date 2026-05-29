@@ -22,6 +22,19 @@ jobs:
         env:
           NEXT_PUBLIC_IMAGE_URL: ${{ secrets.NEXT_PUBLIC_IMAGE_URL }}
 
+      - name: Set Cloudflare Worker secrets
+        run: |
+          echo "${{ secrets.DATABASE_URL }}" | npx wrangler secret put DATABASE_URL
+          echo "${{ secrets.NEXTAUTH_SECRET }}" | npx wrangler secret put NEXTAUTH_SECRET
+          echo "${{ secrets.NEXTAUTH_URL }}" | npx wrangler secret put NEXTAUTH_URL
+          echo "${{ secrets.MY_AWS_ACCESS_KEY_ID }}" | npx wrangler secret put MY_AWS_ACCESS_KEY_ID
+          echo "${{ secrets.MY_AWS_SECRET_ACCESS_KEY }}" | npx wrangler secret put MY_AWS_SECRET_ACCESS_KEY
+          echo "${{ secrets.MY_AWS_REGION }}" | npx wrangler secret put MY_AWS_REGION
+          echo "${{ secrets.AWS_S3_BUCKET }}" | npx wrangler secret put AWS_S3_BUCKET
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Deploy to Cloudflare Workers
         run: npx wrangler deploy
         env:
