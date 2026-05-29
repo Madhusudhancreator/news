@@ -59,7 +59,20 @@
       "Bash(cmd.exe /c \"powershell -Command \\\\\"$folder = 'D:\\\\\\\\creative_touch\\\\\\\\nextjs-newspaper-CMS\\\\\\\\.open-next'; if \\(Test-Path $folder\\) { Get-ChildItem $folder -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue; Remove-Item $folder -Force -Recurse -ErrorAction SilentlyContinue }; Write-Host 'Cleanup done'\\\\\"\" 2>&1)",
       "Bash(cmd.exe /c \"powershell -Command \\\\\"Rename-Item 'D:\\\\\\\\creative_touch\\\\\\\\nextjs-newspaper-CMS\\\\\\\\.open-next' 'D:\\\\\\\\creative_touch\\\\\\\\nextjs-newspaper-CMS\\\\\\\\.open-next-old' -ErrorAction SilentlyContinue; Write-Host 'Renamed'\\\\\"\" 2>&1 && cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm run build:cloudflare 2>&1)",
       "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm run build:cloudflare 2>&1)",
-      "Bash(cmd.exe /c \"powershell -Command \\\\\"Get-MpPreference | Select-Object -ExpandProperty ExclusionPath\\\\\"\" 2>&1)"
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"Get-MpPreference | Select-Object -ExpandProperty ExclusionPath\\\\\"\" 2>&1)",
+      "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm install next@latest 2>&1)",
+      "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && node -e \"console.log\\(require\\('./node_modules/next/package.json'\\).version\\)\")",
+      "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm install @next/third-parties@latest 2>&1 | tail -5)",
+      "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm install @next/third-parties@latest --legacy-peer-deps 2>&1 | tail -5)",
+      "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && node -e \"const p=require\\('./package.json'\\); console.log\\('next:', p.dependencies.next, '@next/third-parties:', p.dependencies['@next/third-parties']\\)\")",
+      "Bash(cd \"D:/creative_touch/nextjs-newspaper-CMS\" && npm install next@\"^15.5.16\" @next/third-parties@\"^15.5.16\" --legacy-peer-deps 2>&1 | tail -8)",
+      "Bash(curl -s \"https://news.madhusudhan-2ec.workers.dev/\" 2>&1 | head -c 1000)",
+      "Bash(curl -s \"https://news.madhusudhan-2ec.workers.dev/api/public/latest-news\" 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && cat node_modules/@prisma/adapter-neon/package.json | python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('adapter-neon:', d['version']\\)\" 2>&1 && cat node_modules/@prisma/client/package.json | python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('prisma/client:', d['version']\\)\" 2>&1)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && timeout 20 npx wrangler tail --name newspaper --format pretty 2>&1 || true)",
+      "Bash(cd \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\" && node -e \"\nconst { neon } = require\\('@neondatabase/serverless'\\);\nrequire\\('dotenv'\\).config\\(\\);\nconst sql = neon\\(process.env.DATABASE_URL\\);\nsql\\\\`SELECT 1 as test\\\\`.then\\(r => console.log\\('DB OK:', r\\)\\).catch\\(e => console.error\\('DB ERROR:', e.message\\)\\);\n\" 2>&1)",
+      "Bash(find \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\\\\node_modules\\\\.prisma\" -name \"*.js\" 2>/dev/null | head -5 || echo \"no .prisma dir\" && ls \"D:\\\\creative_touch\\\\nextjs-newspaper-CMS\\\\node_modules\\\\@prisma\\\\client\" 2>&1 | head -10)",
+      "Bash(curl -s \"https://news.madhusudhan-2ec.workers.dev/api/health\" 2>&1)"
     ]
   }
 }
